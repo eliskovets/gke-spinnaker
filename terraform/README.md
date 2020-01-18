@@ -31,3 +31,4 @@
     ```
     gcloud projects add-iam-policy-binding $(gcloud info --format='value(config.project)') --member serviceAccount:terraform@$(gcloud info --format='value(config.project)').iam.gserviceaccount.com --role roles/owner
     ```
+1.  Connect repository for which you would like to create a pipeline manually in CloudBuild: https://console.cloud.google.com/cloud-build/triggers/connect?provider=github_app&project=${PROJECT_ID}

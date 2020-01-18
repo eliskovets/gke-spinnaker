@@ -4,6 +4,12 @@ provider "google" {
   project = var.gcp_project
 }
 
+provider "google-beta" {
+  credentials = file("${path.module}/account.json")
+  zone = var.gcp_zone
+  project = var.gcp_project
+}
+
 # https://github.com/terraform-providers/terraform-provider-kubernetes/issues/347#issuecomment-489971151
 data "google_client_config" "default" {}
 
@@ -54,6 +60,12 @@ resource "google_project_service" "kubernetes" {
 module "gke_cluster" {
   source = "./modules/gke_cluster"
   name = var.gcp_cluster_name
+}
+
+module "gcp_build_trigger" {
+  source = "./modules/gcp_build_trigger"
+  repo_owner = var.github_repo_owner
+  repo_name = var.github_repo_name
 }
 
 # Create a service account for tiller
