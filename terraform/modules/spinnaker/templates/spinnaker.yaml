@@ -1,0 +1,16 @@
+# Configure your Docker registries here
+dockerRegistries:
+  - name: dockerhub
+    address: index.docker.io
+    repositories:
+      - library/alpine
+      - library/ubuntu
+      - library/centos
+      - library/nginx
+  - name: gcr
+    address: https://gcr.io
+    email: ${gcr_email}
+    username: _json_key
+    repositories: ${gcr_images_list}
+
+dockerRegistryAccountSecret: ${docker_registry_account_secret}

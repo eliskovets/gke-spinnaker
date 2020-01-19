@@ -68,6 +68,11 @@ module "gcp_build_trigger" {
   repo_name = var.github_repo_name
 }
 
+module "gcr_account" {
+  source = "./modules/gcr_account"
+  account_name = "spinnaker-gcr-account"
+}
+
 # Create a service account for tiller
 module "tiller_account" {
   source = "./modules/tiller_account"
@@ -76,4 +81,7 @@ module "tiller_account" {
 # Finally install spinnaker
 module "k8s-spinnaker" {
   source = "./modules/spinnaker"
+  gcr_email = module.gcr_account.service_account_email
+  service_account_json_b64_encoded = module.gcr_account.service_account_json_b64encoded
+  gcr_images_list = ["gcr.io/${var.gcp_project}/github.com/${var.github_repo_owner}/${var.github_repo_name}"]
 }
